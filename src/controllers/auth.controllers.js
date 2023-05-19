@@ -3,15 +3,12 @@ import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 
 export async function signUp(req, res) {
-  const { name, email, password, confirmPassword } = req.body;
-
-  if (password !== confirmPassword) {
-    return res.status(422).send("As senhas não coincidem");
-  }
+  const { name, email, password} = req.body;
 
   try {
     const user = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-    if (user.rows.length > 0){
+
+    if (user.rowCount > 0){
      return res.status(409).send("E-mail já foi cadastrado!");
     }
 
@@ -46,3 +43,4 @@ export async function login(req, res) {
     res.status(500).send(error.message);
   }
 }
+
