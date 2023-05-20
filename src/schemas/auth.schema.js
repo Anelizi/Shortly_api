@@ -1,13 +1,13 @@
-import joi from "joi";
+import Joi from "joi";
 
-export const userSchema = joi.object({
-  name: joi.string().required(),
-  email: joi.string().email().required(),
-  password: joi.string().min(3).required(),
-  confirmPassword: joi.string().valid(joi.ref("password")).required(),
+export const userSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(3).required(),
+  confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
 });
 
-export const loginSchema = joi.object({
-  email: joi.string().email().required(),
-  password: joi.string().min(3).required(),
+export const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(3).required(),
 });
