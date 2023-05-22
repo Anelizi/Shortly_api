@@ -5,6 +5,8 @@ export async function getUser(req, res) {
   const token = authorization?.replace("Bearer ", '');
   const user = await db.query(`SELECT "userId" FROM sessions WHERE token = $1;`, [token]);
 
+  if(!user.rowCount) return res.sendStatus(401);
+
   try {
     const result = await db.query(`SELECT users.id, users.name,
       SUM(urls."visitCount") AS "visitCount",
