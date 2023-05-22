@@ -77,8 +77,6 @@ export async function deleteUrl(req, res) {
   const { id } = req.params;
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
-  
-  if(!parseInt(id)) return res.sendStatus(404);
 
   try {
     const user = await db.query(`SELECT "userId" FROM sessions 
@@ -94,6 +92,8 @@ export async function deleteUrl(req, res) {
     );
 
     if(url.rowCount === 0) return sendStatus(401);
+
+    if(!url.rowCount) return sendStatus(404);
 
     if(url.rows[0].userId != user.rows[0].userId){
       return res.sendStatus(401);
