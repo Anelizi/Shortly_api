@@ -146,12 +146,18 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 INSERT INTO public.sessions VALUES (1, 'afd400f6-1d74-4510-8b2b-2bbbec812cc7', 1, '2023-05-19 20:51:17.949786');
 INSERT INTO public.sessions VALUES (2, '756de6a5-5425-46aa-8e3b-51e278d542ee', 1, '2023-05-19 20:52:43.972816');
+INSERT INTO public.sessions VALUES (3, 'a93a3d8a-1cfe-4af0-99cd-20e35dadcbb2', 1, '2023-05-21 20:48:55.840547');
+INSERT INTO public.sessions VALUES (4, '9f308b6a-bf6d-475b-b84d-f0b78667501b', 1, '2023-05-21 21:55:02.115987');
+INSERT INTO public.sessions VALUES (5, '6a0bd7df-5898-4454-9ce1-21331a3aae1d', 1, '2023-05-22 10:08:04.938024');
 
 
 --
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.urls VALUES (2, 'https://i.pinimg.com/736x/ce/2d/d0/ce2dd09f0ce6279d9245f6d13ba18651.jpg', 'hJtU7cjhDhdepeLL89LzG', 1, 0, '2023-05-21 20:50:49.911283');
+INSERT INTO public.urls VALUES (3, 'https://i.pinimg.com/736x/ce/2d/d0/ce2dd09f0ce6279d9245f6d13ba18651.jpg', 'OgLs7cCuXi', 1, 0, '2023-05-21 21:00:03.663122');
+INSERT INTO public.urls VALUES (4, 'https://i.pinimg.com/736x/ce/2d/d0/ce2dd09f0ce6279d9245f6d13ba18651.jpg', 'oonhFPZsRvC6kwxMsqXNe', 1, 0, '2023-05-21 21:07:12.308963');
 
 
 --
@@ -165,14 +171,14 @@ INSERT INTO public.users VALUES (1, 'Ane', 'ane@gmail.com', '$2b$10$qm95AhG9P7F3
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 2, true);
+SELECT pg_catalog.setval('public.sessions_id_seq', 5, true);
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
+SELECT pg_catalog.setval('public.urls_id_seq', 4, true);
 
 
 --
