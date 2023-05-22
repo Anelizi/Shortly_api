@@ -91,7 +91,7 @@ export async function deleteUrl(req, res) {
       [id]
     );
 
-    if(url.rowCount === 0) return sendStatus(401);
+    if(url.rowCount === 0) return sendStatus(404);
 
     if(!url.rowCount) return sendStatus(404);
 
