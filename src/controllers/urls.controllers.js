@@ -86,12 +86,10 @@ export async function deleteUrl(req, res) {
 
     if(!user.rowCount) return res.sendStatus(401);
 
-    const url = await db.query(`SELECT id, "shortUrl", "userId" 
+    const url = await db.query(`SELECT *
       FROM urls WHERE id = $1;`,
       [id]
     );
-
-    if(url.rowCount === 0) return sendStatus(404);
 
     if(!url.rowCount) return sendStatus(404);
 
