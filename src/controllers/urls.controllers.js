@@ -78,7 +78,7 @@ export async function deleteUrl(req, res) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
   
-  if(!parseInt(id)) return sendStatus(404);
+  if(!parseInt(id)) return res.sendStatus(404);
 
   try {
     const user = await db.query(`SELECT "userId" FROM sessions 
