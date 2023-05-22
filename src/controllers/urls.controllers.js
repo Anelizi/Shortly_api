@@ -13,6 +13,8 @@ export async function postUrl(req, res) {
       [token]
     );
 
+    if(!user.rowCount) return res.sendStatus(401);
+
     await db.query(
       `INSERT INTO urls (url, "shortUrl", "userId")
       VALUES ($1, $2, $3);`,
@@ -25,7 +27,7 @@ export async function postUrl(req, res) {
       [shortUrl, user.rows[0].userId]
     );
 
-    res.status(201).send("ok");
+    res.status(201).send(urls.rows[0]);
   } catch (error) {
     res.status(500).send(error.message);
   }
