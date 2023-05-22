@@ -86,6 +86,8 @@ export async function deleteUrl(req, res) {
       [token]
     );
 
+    if(!user.rowCount) return res.sendStatus(401);
+
     const url = await db.query(`SELECT id, "shortUrl", "userId" 
       FROM urls WHERE id = $1;`,
       [id]
@@ -94,7 +96,7 @@ export async function deleteUrl(req, res) {
     if(url.rowCount === 0) return sendStatus(401);
 
     if(url.rows[0].userId != user.rows[0].userId){
-      return res.sendStatus(404);
+      return res.sendStatus(401);
     }
 
     await db.query(`DELETE FROM urls WHERE id = $1;`, [id]);
