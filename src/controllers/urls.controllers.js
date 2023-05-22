@@ -53,11 +53,17 @@ export async function getId(req, res) {
 export async function getOpen(req, res) {
   const { shortUrl } = req.params;
   try {
-    const open = await db.query(`SELECT * FROM urls WHERE "shortUrl" = $1;`, [shortUrl])
+    const open = await db.query(`SELECT * FROM urls 
+      WHERE "shortUrl" = $1;`, 
+      [shortUrl]
+    );
 
     if (open.rowCount === 0) return res.sendStatus(404)
 
-    await db.query(`UPDATE urls SET "visitCount" = "visitCount" + 1 WHERE "shortUrl" = $1;`, [shortUrl]);
+    await db.query(`UPDATE urls SET "visitCount" = "visitCount" + 1  
+      WHERE "shortUrl" = $1;`, 
+      [shortUrl]
+    );
 
     res.status(200).redirect(open.rows[0].url);
   } catch (error) {
@@ -66,7 +72,32 @@ export async function getOpen(req, res) {
 }
 
 export async function deleteUrl(req, res) {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+  
+  if(!parseInt(id)) return sendStatus(404);
+
   try {
+    const user = await db.query(`SELECT "userId" FROM sessions 
+      WHERE token = $1;`, 
+      [token]
+    );
+
+    const url = await db.query(`SELECT id, "shortUrl", "userId" 
+      FROM urls WHERE id = $1;`,
+      [id]
+    );
+
+    if(url.rowCount === 0) return sendStatus(401);
+
+    if(url.rows[0].userId != user.rows[0].userId){
+      return res.sendStatus(401);
+    }
+
+    await db.query(`DELETE FROM urls WHERE id = $1;`, [id]);
+
+    res.status(204).send("deletado");
   } catch (error) {
     res.status(500).send(error.message);
   }
