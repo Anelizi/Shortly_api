@@ -25,7 +25,7 @@ export async function postUrl(req, res) {
       [shortUrl, user.rows[0].userId]
     );
 
-    res.status(201).send(urls.rows[0]);
+    res.status(201).send("ok");
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -38,7 +38,7 @@ export async function getId(req, res) {
 
   try {
     const url = await db.query(`SELECT id, url, "shortUrl" 
-       FROM ulrs WHERE id =$1;`,
+       FROM urls WHERE id = $1;`,
       [id]
     );
 
@@ -53,7 +53,11 @@ export async function getId(req, res) {
 export async function getOpen(req, res) {
   const { shortUrl } = req.params;
   try {
-    const open = await db.query(`UPDATE urls SET "visitCount" = "visitCount" + 1 WHERE "shortUrl" = $1;`, [shortUrl]);
+    const open = await db.query(`SELECT * FROM urls WHERE "shortUrl" = $1;`, [shortUrl])
+
+    if (open.rowCount === 0) return res.sendStatus(404)
+
+    await db.query(`UPDATE urls SET "visitCount" = "visitCount" + 1 WHERE "shortUrl" = $1;`, [shortUrl]);
 
     res.status(200).redirect(open.rows[0].url);
   } catch (error) {
