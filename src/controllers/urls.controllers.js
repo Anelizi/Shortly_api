@@ -91,7 +91,7 @@ export async function deleteUrl(req, res) {
       [id]
     );
 
-    if(!url.rowCount === 0) return res.sendStatus(404);
+    if(!url.rowCount) return res.sendStatus(404);
 
     if(url.rows[0].userId != user.rows[0].userId){
       return res.sendStatus(401);
